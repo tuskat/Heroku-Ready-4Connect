@@ -4,30 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { routing } from './app.router';
-import { effects, store, instrumentation } from './store';
-import { SharedModule } from './shared/shared.module';
-import { WeatherService } from './weather/weather.service';
+import { GameGridComponent } from './game-grid/game-grid.component';
+import { MenuComponent } from './menu/menu.component';
+import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GameGridComponent,
+    MenuComponent,
+    ScoreboardComponent
   ],
   imports: [
     BrowserModule,
-    SharedModule,
     FormsModule,
-    HttpModule,
-    store,
-    effects,
-    routing,
-    instrumentation
+    HttpModule
   ],
-  providers: [
-    WeatherService
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

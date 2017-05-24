@@ -1,9 +1,8 @@
-<app-ui-top-navigation></app-ui-top-navigation>
-
-<app-ui-sub-navigation [title]="(observable$ | async)?.title" [description]="(observable$ | async)?.text"></app-ui-sub-navigation>
-
-<div class="main">
-  <router-outlet></router-outlet>
+<div class="animated bounceInDown">
+<h1 [class.in-game]="gameStarted">{{title}}</h1>
+<app-menu (onChosenMode)="onChosenMode($event)" *ngIf="!gameStarted"></app-menu>
+<app-game-grid (onChosenMode)="onChosenMode($event)" [currentMode]="gameMode"  *ngIf="gameStarted"></app-game-grid>
 </div>
-
-<router-outlet name='modal'></router-outlet>
+<footer  *ngIf="!gameStarted">
+  <div>Cedric Marcellin - 2017</div>
+</footer>

@@ -1,0 +1,34 @@
+<div class="game-window animated fadeInDown">
+<app-scoreboard [currentMode]="currentMode"></app-scoreboard>
+  <div class="game-cursors">
+    <div class="game-cursor-item" *ngFor="let item of gameService.grid; let i = index">
+      <div *ngIf="currentMode === 1 && currentPlayer === 2" class="computer-overlay animated fadeIn">
+        <p>Computer is playing...</p>
+      </div>
+      <button *ngIf="!gameOver" [class.player-one]="currentPlayer === 1" [class.player-two]="currentPlayer === 2" (click)="playerPlaceOn(i)"></button>
+    </div>
+  </div>
+  <div class="game-grid">
+    <div class="game-column" *ngFor="let column of gameService.grid">
+      <div class="game-item" *ngFor="let item of column">
+        <button [class.player-one]="item === 1" [class.player-two]="item === 2"></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-result animated fadeIn" *ngIf="gameOver">
+  <div *ngIf="!gridFull">
+    <p *ngIf="currentMode === 1">You {{gameResult}}</p>
+    <p *ngIf="currentMode === 2">Player {{currentPlayer}} has won</p>
+    <p> Round Time : {{gameTime[1]}} min {{gameTime[0]}} secs</p>
+  </div>
+  <div *ngIf="gridFull">
+    <p>Draw</p>
+  </div>
+  <button (click)="replayGame()">Replay</button>
+  <button (click)="leaveGame()">Go Back to menu</button>
+</div>
+
+<div class="game-dismiss">
+  <button (click)="leaveGame()">X</button>
+</div>

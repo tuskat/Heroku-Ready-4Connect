@@ -1,30 +1,33 @@
 import { Component } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { GameService } from './game.service';
 
-import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import { Store } from '@ngrx/store';
-import { IAppState } from './store/index';
-import { USER_GET } from './store/profile/profile.actions';
+enum Mode {
+  Solo = 1,
+  Multi,
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [GameService]
 })
 export class AppComponent {
+  title: string = 'Connect Four';
+  gameStarted: boolean = false;
+  gameMode: number = Mode.Solo;
+  constructor(private gameService: GameService) { }
 
-  observable$: Observable<{}>;
-
-  constructor(http: Http, store: Store<IAppState>) {
-    this.observable$ = http
-      .get('/api/public/simple')
-      .map((response: Response) => response.json());
-
-    store.dispatch({
-      type: USER_GET
-    });
+  onChosenMode($event) {
+    if ($event === false) {
+      this.gameService.gamemode = null;
+    }
+    if (this.gameService.gamemode !== null) {
+      this.gameStarted = true;
+      this.gameMode = $event;
+    } else {
+      this.gameStarted = false;
+    }
   }
 }
